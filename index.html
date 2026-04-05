@@ -655,6 +655,11 @@
     </div>
   </section>
 
+<!-- ASTHETIC MUSIC -->
+<audio id="bg-music" loop hidden>
+  <source src="https://www.odishalyrics.com/wp-content/uploads/2022/12/Tu-Khara-Mu-Chhai.mp3" type="audio/mpeg">
+</audio>
+
   <!-- SECTION 2: WHY YOU'RE SPECIAL -->
   <section class="section bg-gradient-2" id="sec-2">
     <h2 style="color: #fff; text-shadow: 1px 1px 5px rgba(0,0,0,0.2); margin-bottom: 30px; font-size: 2.5rem;">Why
@@ -1062,6 +1067,23 @@
 
       requestAnimationFrame(animate);
     }
+
+function startJourney() {
+  const music = document.getElementById('bg-music');
+  
+  // Volume set karein (0.4 aesthetic aur soft sound ke liye best hai)
+  music.volume = 0.4;
+
+  // Music start karein
+  music.play().then(() => {
+    console.log("Swayam Padhi's magic started!");
+  }).catch(err => {
+    console.log("Autoplay blocked, but user interaction will start it.");
+  });
+
+  // Agla section (Memories) dikhayein
+  nextSection(2);
+}
 
   </script>
 </body>
