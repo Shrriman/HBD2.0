@@ -635,13 +635,11 @@
 <body>
 
   <!-- Background Audio -->
-  <audio id="bg-music" loop>
-    <!-- Using a placeholder romantic royalty-free music link -->
-    <source
-      src="https://cdn.pixabay.com/download/audio/2022/02/10/audio_fc8625df5c.mp3?filename=romantic-piano-101134.mp3"
-      type="audio/mpeg">
-  </audio>
-
+  <!-- ASTHETIC MUSIC -->
+<audio id="bg-music" loop hidden>
+  <source src="https://www.odishalyrics.com/wp-content/uploads/2022/12/Tu-Khara-Mu-Chhai.mp3" type="audio/mpeg">
+</audio>
+  
   <!-- Canvas Backgrounds -->
   <canvas id="bg-canvas"></canvas>
   <canvas id="fx-canvas"></canvas>
@@ -654,11 +652,6 @@
       <button class="btn fade-in-text" onclick="startJourney()">Open Memories ✨</button>
     </div>
   </section>
-
-<!-- ASTHETIC MUSIC -->
-<audio id="bg-music" loop hidden>
-  <source src="https://www.odishalyrics.com/wp-content/uploads/2022/12/Tu-Khara-Mu-Chhai.mp3" type="audio/mpeg">
-</audio>
 
   <!-- SECTION 2: WHY YOU'RE SPECIAL -->
   <section class="section bg-gradient-2" id="sec-2">
@@ -1071,17 +1064,17 @@
 function startJourney() {
   const music = document.getElementById('bg-music');
   
-  // Volume set karein (0.4 aesthetic aur soft sound ke liye best hai)
-  music.volume = 0.4;
+  // Debugging line: isse console mein pata chal jayega function call hua ya nahi
+  console.log("Button Clicked, trying to play music...");
 
-  // Music start karein
   music.play().then(() => {
-    console.log("Swayam Padhi's magic started!");
-  }).catch(err => {
-    console.log("Autoplay blocked, but user interaction will start it.");
+    console.log("Music is playing!");
+    music.volume = 0.5;
+  }).catch(error => {
+    console.error("Playback failed:", error);
+    // Agar yahan error aaye toh iska matlab link dead hai ya browser block kar raha hai
   });
 
-  // Agla section (Memories) dikhayein
   nextSection(2);
 }
 
