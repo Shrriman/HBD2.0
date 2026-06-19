@@ -37,9 +37,9 @@
     html {
       width: 100%;
       height: 100%;
+      min-height: 100%;
       font-family: 'Poppins', sans-serif;
       overflow-x: hidden;
-      overflow-y: hidden;
       /* Hide scrollbars for app-like feel */
       background-color: #000;
       color: var(--text-dark);
@@ -65,12 +65,10 @@
     /* === SECTION MANAGEMENT === */
     .section {
       position: absolute;
-      top: 0;
-      left: 0;
+      inset: 0;
       width: 100%;
       min-height: 100dvh;
-      height: 100vh;
-      height: 100dvh;
+      height: auto;
       opacity: 0;
       visibility: hidden;
       transition: opacity 1.2s ease-in-out, visibility 1.2s ease-in-out;
@@ -79,7 +77,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 20px;
+      padding: 40px 20px;
       overflow-y: auto;
       overflow-x: hidden;
     }
@@ -200,7 +198,8 @@
     /* === SECTION 1: HERO === */
     #typing-text {
       font-size: clamp(2rem, 8vw, 3.5rem);
-      min-height: 120px;
+      min-height: auto;
+      margin-bottom: 20px;
       color: var(--primary);
       text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
     }
@@ -410,7 +409,7 @@
       bottom: 60px;
       left: 50%;
       transform: translateX(-50%) scale(0);
-      width: 300px;
+      width:min(90vw,300px);
       text-align: center;
       font-family: 'Playfair Display', serif;
       font-size: 2.2rem;
@@ -423,7 +422,7 @@
     }
 
     .gift-container.opened .surprise-text {
-      transform: translateX(-50%) scale(1) translateY(-120px);
+      transform: translate(-50%, -120px) scale(1);
       opacity: 1;
     }
 
@@ -437,10 +436,11 @@
       max-width: 600px;
       width: min(95%, 650px);
       height: auto;
-      min-height: 500px;
+      min-height: auto;
+      max-height: 85vh;
       transform: rotate(-2deg);
       transition: transform 0.3s ease;
-      overflow-y:auto;
+      overflow: visible;
     }
 
     .paper-card:hover {
@@ -462,7 +462,8 @@
     .gallery-layout {
       display: flex;
       flex-direction: row;
-      align-items: center;
+      align-items: flex-start;
+      flex-wrap: wrap;
       justify-content: center;
       gap: 40px;
       width: 100%;
@@ -546,9 +547,11 @@
     }
 
     .modal img {
-      width: auto;
+      width: 90vw;
       max-width: 95vw;
       max-height: 80vh;
+      height: auto;
+      object-fit: contain;
       border: 10px solid #fff;
       border-radius: 4px;
       box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
@@ -582,6 +585,8 @@
       text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
       margin-bottom: 40px;
       text-align: center;
+      word-break: break-word;
+      padding: 0 15px;
     }
 
 
@@ -812,7 +817,7 @@
   <!-- SECTION 6: FINAL -->
   <section class="section bg-gradient-6" id="sec-6">
     <div class="final-text" id="final-type-text"></div>
-    <button class="btn" onclick="location.reload()" style="margin-top: 50px;">Replay 🔄</button>
+    <button class="btn" onclick="replayJourney()" style="margin-top: 50px;">Replay 🔄</button>
   </section>
 
   <!-- IMAGE MODAL -->
@@ -834,14 +839,15 @@
 
     function typeWriter() {
       if (i < heroText.length) {
-        heroEl.innerHTML += heroText.charAt(i);
+        heroEl.textContent = heroText.slice(0,i+1);
         i++;
         setTimeout(typeWriter, 150);
       }
     }
 
     // Start typing on load
-    window.onload = () => {
+     window.onload = () => {
+      resize();
       setTimeout(typeWriter, 500);
       initHearts();
       animate();
@@ -850,18 +856,24 @@
     /* === SECTION NAVIGATION === */
 
     function nextSection(num) {
-      document.getElementById(`sec-${currentSection}`).classList.remove('active');
-      currentSection = num;
-      document.getElementById(`sec-${currentSection}`).classList.add('active');
 
-      // Trigger specific section behaviors
+      document
+        .getElementById(`sec-${currentSection}`)
+        .classList.remove('active');
+    
+      currentSection = num;
+    
+      document
+        .getElementById(`sec-${currentSection}`)
+        .classList.add('active');
+    
+      window.scrollTo(0, 0);
+    
       if (num === 6) {
+        finalEl.innerHTML = "";
+        fi = 0;
         setTimeout(typeFinalText, 1000);
-        activeEffect = 'rain'; // change canvas effect
-      } else if (num === 3) {
-        activeEffect = 'none'; // clear hearts for fireworks later
-      } else {
-        activeEffect = 'hearts';
+        activeEffect = 'rain';
       }
     }
 
@@ -933,33 +945,24 @@
       if (giftOpened) return;
       giftOpened = true;
       document.getElementById('gift-box').classList.add('opened');
-
-      // Trigger Fireworks & Confetti
+    
       fireworksActive = true;
       triggerConfetti();
-
-      // Show next button
+    
+      setTimeout(() => {
+        fireworksActive = false;
+      }, 10000); // 10 second baad fireworks band
+    
       setTimeout(() => {
         const btn = document.getElementById('btn-to-sec4');
         btn.style.opacity = '1';
         btn.style.pointerEvents = 'all';
       }, 2000);
     }
-
+    
     /* === SECTION 5: MODAL LOGIC === */
     const modal = document.getElementById('image-modal');
     const modalImg = document.getElementById('modal-img');
-
-    function openModal(src) {
-      modalImg.src = src;
-      modal.classList.add('active');
-    }
-    function closeModal() {
-      modal.classList.remove('active');
-    }
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) closeModal();
-    });
 
     /* === SECTION 6: FINAL TEXT === */
     const finalStr = "I Love You Forever ❤️";
@@ -987,8 +990,12 @@
       bgCanvas.width = fxCanvas.width = width;
       bgCanvas.height = fxCanvas.height = height;
     }
-    window.addEventListener('resize', resize);
+    
+    window.addEventListener('resize', () => {
     resize();
+    hearts.length = 0;
+    initHearts();
+    });
 
     let activeEffect = 'hearts'; // 'hearts', 'none', 'rain'
     let fireworksActive = false;
@@ -1025,7 +1032,7 @@
     const confettis = [];
     const colors = ['#ff4d6d', '#ffd700', '#fff', '#ffb3c6', '#00f5d4'];
     function triggerConfetti() {
-      for (let i = 0; i < 150; i++) {
+      for (let i = 0; i < 80; i++) {
         confettis.push({
           x: width / 2,
           y: height - 200, // starting near box
@@ -1132,28 +1139,37 @@
       requestAnimationFrame(animate);
     }
 
-function startJourney() {
-  const music = document.getElementById('bg-music');
-  
-  // Debugging line: isse console mein pata chal jayega function call hua ya nahi
-  console.log("Button Clicked, trying to play music...");
-
-  music.play().then(() => {
-    console.log("Music is playing!");
-    music.volume = 0.5;
-  }).catch(error => {
-    console.error("Playback failed:", error);
-    // Agar yahan error aaye toh iska matlab link dead hai ya browser block kar raha hai
-  });
-
-  nextSection(2);
-}
-
-function replayJourney(){
-  sessionStorage.clear();
-  location.reload();
-}
-
+    function startJourney() {
+      const music = document.getElementById('bg-music');
+      
+      // Debugging line: isse console mein pata chal jayega function call hua ya nahi
+      console.log("Button Clicked, trying to play music...");
+    
+      music.play().then(() => {
+        console.log("Music is playing!");
+        music.volume = 0.5;
+      }).catch(error => {
+        console.error("Playback failed:", error);
+        // Agar yahan error aaye toh iska matlab link dead hai ya browser block kar raha hai
+      });
+    
+      nextSection(2);
+    }
+    
+    function replayJourney(){
+      location.reload();
+    }
+    
+    function openModal(src){
+        document.body.style.overflow='hidden';
+        modalImg.src=src;
+        modal.classList.add('active');
+    }
+    
+    function closeModal(){
+        document.body.style.overflow='';
+        modal.classList.remove('active');
+    }
   </script>
 </body>
 
