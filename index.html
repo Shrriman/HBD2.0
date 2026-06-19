@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover, user-scalable=no">
   <title>For My Love ❤️</title>
 
   <!-- Google Fonts -->
@@ -37,7 +37,7 @@
     html {
       width: 100%;
       height: 100%;
-      min-height: 100%;
+      min-height: 100dvh;
       font-family: 'Poppins', sans-serif;
       overflow-x: hidden;
       overflow-y: hidden;
@@ -78,11 +78,11 @@
       flex-direction: column;
       align-items: center;
       padding: 40px 20px;
-      justify-content: flex-start;
-      padding-top: 90px;
-      padding-bottom: 160px;
+      justify-content: center;
       overflow-y: auto;
       overflow-x: hidden;
+      padding-top:40px;
+      padding-bottom:40px;
     }
 
     .section.active {
@@ -465,8 +465,8 @@
     
     #sec-5{
       justify-content:flex-start;
-      padding-top:120px;
-      padding-bottom:180px;
+      padding-top:100px;
+      padding-bottom:120px;
     }
     
     .gallery-layout {
@@ -601,6 +601,29 @@
       padding: 0 15px;
     }
 
+    #sec-1{
+      justify-content:center;
+    }
+
+    #sec-1 .glass-card{
+      margin:auto;
+    }
+
+    #sec-2{
+      padding-bottom:120px;
+    }
+
+
+    #sec-3{
+      justify-content:center;
+      gap:30px;
+    }
+    
+    #btn-to-sec3{
+      margin-bottom:40px;
+      min-height:60px;
+    }
+
 
     /* === RESPONSIVE DESIGN === */
     @media (max-width: 768px) {
@@ -661,13 +684,20 @@
       }
 
       .section{
-          justify-content:flex-start;
-          padding-top:100px;
-          padding-bottom:220px;
+        justify-content:center;
+        padding-top:30px;
+        padding-bottom:30px;
       }
-    
+        
       .gallery-layout{
-          padding-bottom:80px;
+        padding-bottom:80px;
+      }
+
+      #btn-to-sec3{
+        width:85%;
+        max-width:300px;
+        margin-top:20px;
+        margin-bottom:60px;
       }
     }
 
