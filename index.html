@@ -40,6 +40,7 @@
       min-height: 100%;
       font-family: 'Poppins', sans-serif;
       overflow-x: hidden;
+      overflow-y: hidden;
       /* Hide scrollbars for app-like feel */
       background-color: #000;
       color: var(--text-dark);
@@ -76,8 +77,10 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
       padding: 40px 20px;
+      justify-content: flex-start;
+      padding-top: 80px;
+      padding-bottom: 80px;
       overflow-y: auto;
       overflow-x: hidden;
     }
@@ -437,7 +440,7 @@
       width: min(95%, 650px);
       height: auto;
       min-height: auto;
-      max-height: 85vh;
+      max-height: none;
       transform: rotate(-2deg);
       transition: transform 0.3s ease;
       overflow: visible;
@@ -640,6 +643,16 @@
       .surprise-text {
         width: 250px;
         font-size: 1.5rem;
+      }
+
+      .section{
+          justify-content:flex-start;
+          padding-top:70px;
+          padding-bottom:100px;
+      }
+    
+      .gallery-layout{
+          padding-bottom:80px;
       }
     }
 
